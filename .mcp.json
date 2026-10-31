@@ -3,13 +3,6 @@
     "rea": {
       "command": "/root/.local/bin/rea",
       "args": ["mcp"]
-    },
-    "github": {
-      "command": "/root/.local/bin/github-mcp-server",
-      "args": ["stdio"],
-      "env": {
-        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
-      }
     }
   }
 }
