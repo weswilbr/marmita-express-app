@@ -78,6 +78,15 @@ classification, and unavailable sources never establish route reachability or
 the complete application route denominator. See the
 [route inventory guide](https://github.com/morluto/rea/blob/main/docs/javascript-route-inventory.md).
 
+For captured endpoint observations and inference facts, `analyze_web_bundle`
+also accepts `view: {kind: "web-bundle", collection: "endpoints", limit: 32}`
+with `detail: "summary"`. Read later `endpoints`, `inferences`, or `summary`
+pages from the retained parent. Filter before requesting detail; retain
+`source_index` together with parent ID and collection, and request `location`
+or `basis` when tracing sources. Page exhaustion does not mean producer
+completeness: check `completeness`, structured `source_unknowns`, and limitations.
+Endpoint candidates remain inferences rather than confirmed network behavior.
+
 ## Read a module without repeating analysis
 
 Use the actual returned parent ID, on the same connection, as `source.evidence_id`.
@@ -227,8 +236,13 @@ This notation is
 a template: replace it with the actual returned ID. Versions before 4.1.0 accept only full
 inline Evidence. Use the exact ID
 returned by the producer on the same MCP connection. Resolution does not run
-analysis or select a provider; findings remain inline. Native observation
-arrays still take full Evidence. `close_binary` clears retained references;
+analysis or select a provider; findings remain inline. For summary or inspection
+replies, select the complete `normalized_result.parent_evidence_id`. Native
+observation arrays and runtime reconciliation's `static_layers[].analysis` and
+`runtime_observations[]` also accept exact references where advertised. Each
+source can independently be inline or retained, preserving identity, coverage
+and unknowns. CLI workflows advertising `--evidence-bundle` resolve these inputs
+from the explicitly selected bundle. `close_binary` clears retained references;
 export a bundle before closing, or supply portable inline Evidence in another
 connection. A missing reference includes its ID and recovery guidance.
 
